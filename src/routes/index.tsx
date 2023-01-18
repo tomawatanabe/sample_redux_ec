@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { FC } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import Home from "../components/enviroment/Home";
 
 const IndexRoutes: FC = () => {
   const { hash, pathname } = useLocation();
@@ -13,6 +14,7 @@ const IndexRoutes: FC = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

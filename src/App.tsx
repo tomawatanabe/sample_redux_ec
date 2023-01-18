@@ -1,47 +1,11 @@
-import { FC, useState } from "react";
-import styled from "@emotion/styled";
-import { Button } from "@mui/material";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import type { FC } from "react";
+import Providers from "./Providers";
+import IndexRoutes from "./routes";
 
-const App: FC = () => {
-  const [count, setCount] = useState(0);
-
-  const TextButton = styled(Button)`
-    text-transform: none;
-  `;
-
-  return (
-    <div className="App">
-      <TextButton>text</TextButton>
-      <Button variant="contained">contained</Button>
-      <Button variant="outlined">outlined</Button>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          onClick={() => {
-            setCount((count) => count + 1);
-          }}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  );
-};
+const App: FC = () => (
+  <Providers>
+    <IndexRoutes />
+  </Providers>
+);
 
 export default App;
