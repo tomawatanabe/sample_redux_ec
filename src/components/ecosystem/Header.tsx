@@ -3,7 +3,6 @@ import { AccountCircle, ShoppingCart } from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Toolbar from "@mui/material/Toolbar";
@@ -54,70 +53,57 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header: React.FC = () => {
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          // , alignItems:"flex-start"
-        }}
-      >
-        <AppBar position="static">
-          <Toolbar>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              JORDANS
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-            {/* <Box sx={{ flexGrow: 1 }} /> */}
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 0, mr: 4, fontSize: 18 }}
-            >
-              お問い合わせ
-            </Typography>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 0, mr: 4, fontSize: 18 }}
-            >
-              買取受付
-            </Typography>
-            <IconButton
-              size="large"
-              // edge="start"
-              color="inherit"
-              // aria-label="open drawer"
-              sx={{ mr: 4 }}
-            >
-              <ShoppingCart />
-            </IconButton>
-            <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
-              <AccountCircle />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box>
+      <AppBar position="sticky" sx={{ top: 0 }}>
+        <Toolbar>
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              flexGrow: 1,
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Redux_MUI_EC
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="検索"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          {/* <Box sx={{ flexGrow: 1 }} /> */}
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 0, mr: 4, fontSize: 16 }}
+          >
+            お問い合わせ
+          </Typography>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 0, mr: 4, fontSize: 16 }}
+          >
+            買取受付
+          </Typography>
+          <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+            <ShoppingCart />
+          </IconButton>
+          <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+            <AccountCircle />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
     </>
   );
 };
