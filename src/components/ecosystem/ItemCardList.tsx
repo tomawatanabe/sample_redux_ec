@@ -1,20 +1,16 @@
 import { FC, useEffect, useState } from "react";
 import {
-  Avatar,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
   Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Pagination,
   Typography,
 } from "@mui/material";
 import { supabase } from "../../lib/supabase-client";
 import { Box } from "@mui/system";
+import { Link as RouterLink } from "react-router-dom";
 
 // type itemList = {
 //   id: number | null;
@@ -67,45 +63,46 @@ const ItemList: FC = () => {
 
   return (
     <>
-      <Grid
-        container
-        spacing={6}
-        mt={0}
-        ml={0}
-        justifyContent="center"
-        alignItems="center"
-      >
-        {stocks.map((stock: any) => {
-          const localedPrice = stock.price?.toLocaleString();
+      <Box sx={{ padding: 5 }}>
+        <Grid container spacing={6} justifyContent="center" alignItems="center">
+          {stocks.map((stock: any) => {
+            const localedPrice = stock.price?.toLocaleString();
 
-          return (
-            <Grid item xs={12} sm={4} md={3}>
-              <Card sx={{ maxWidth: 200 }}>
-                <CardActionArea>
-                  {/* onClickで詳細に移動するdispatchを実装する */}
-                  <CardMedia
-                    component="img"
-                    src={`${stock.image1}`}
-                    alt={`${stock.image1}`}
-                    height="150"
-                  />
-                  <CardContent>
-                    <Typography variant="body1" color="text.first">
-                      {stock.items?.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      ¥{localedPrice}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      size:{stock.size}cm
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          );
-        })}
-      </Grid>
+            return (
+              <Grid item xs={12} sm={4} md={3} lg={2.4}>
+                <Card sx={{ height: 350 }}>
+                  <CardActionArea
+                    component={RouterLink}
+                    to={`/items/${stock.id}`}
+                  >
+                    {/* onClickで詳細に移動するdispatchを実装する */}
+                    <Box sx={{ height: 240 }}>
+                      <CardMedia
+                        component="img"
+                        src={`${stock.image1}`}
+                        alt={`${stock.image1}`}
+                        height="auto"
+                        width="100%"
+                      />
+                    </Box>
+                    <CardContent>
+                      <Typography variant="body1" color="text.first">
+                        {stock.items?.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        ¥{localedPrice}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        size:{stock.size}cm
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
 
       <div>
         <Grid
@@ -113,6 +110,7 @@ const ItemList: FC = () => {
           alignItems="center"
           justifyContent="center"
           direction="column"
+          mt={6}
         >
           <Grid item xs={12}>
             <Pagination

@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { Link as RouterLink } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,8 +59,8 @@ const Header: React.FC = () => {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="/"
+            component={RouterLink}
+            to={"/"}
             sx={{
               mr: 2,
               flexGrow: 1,
