@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { signIn } from "../reducks/store/userSlice";
+import { signIn } from "../redux/userSlice";
 import { supabase } from "../../lib/supabase-client";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
