@@ -3,11 +3,17 @@ import { AccountCircle, ShoppingCart } from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import HistoryIcon from "@mui/icons-material/History";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { Link as RouterLink } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import LoginIcon from "@mui/icons-material/Login";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -52,72 +58,127 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header: React.FC = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
+  console.log("cookies", cookies);
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          // , alignItems:"flex-start"
-        }}
-      >
-        <AppBar position="static">
-          <Toolbar>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              JORDANS
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-            {/* <Box sx={{ flexGrow: 1 }} /> */}
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 0, mr: 4, fontSize: 18 }}
-            >
-              お問い合わせ
-            </Typography>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 0, mr: 4, fontSize: 18 }}
-            >
-              買取受付
-            </Typography>
-            <IconButton
-              size="large"
-              // edge="start"
-              color="inherit"
-              // aria-label="open drawer"
-              sx={{ mr: 4 }}
-            >
-              <ShoppingCart />
-            </IconButton>
-            <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
-              <AccountCircle />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box>
+      {cookies.userID ? (
+        <>
+          <AppBar position="sticky" sx={{ top: 0 }}>
+            <Toolbar>
+              <Typography
+                variant="h5"
+                noWrap
+                component={RouterLink}
+                to={"/"}
+                sx={{
+                  mr: 2,
+                  flexGrow: 1,
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                Redux_MUI_EC
+              </Typography>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="商品検索"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+              {/* <Box sx={{ flexGrow: 1 }} /> */}
+
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <QuestionMarkIcon />
+              </IconButton>
+
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <ShoppingCart />
+              </IconButton>
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <HistoryIcon />
+              </IconButton>
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <AccountCircle />
+              </IconButton>
+              <IconButton
+                size="large"
+                color="inherit"
+                sx={{ mr: 4 }}
+                onClick={() => removeCookie("userID")}
+              >
+                <LogoutIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+        </>
+      ) : (
+        <>
+          <AppBar position="sticky" sx={{ top: 0 }}>
+            <Toolbar>
+              <Typography
+                variant="h5"
+                noWrap
+                component={RouterLink}
+                to={"/"}
+                sx={{
+                  mr: 2,
+                  flexGrow: 1,
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                Redux_MUI_EC
+              </Typography>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="商品検索"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+              {/* <Box sx={{ flexGrow: 1 }} /> */}
+
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <QuestionMarkIcon />
+              </IconButton>
+
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <ShoppingCart />
+              </IconButton>
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+                <HistoryIcon />
+              </IconButton>
+              <IconButton
+                component={RouterLink}
+                to={"/signin"}
+                size="large"
+                color="inherit"
+                sx={{ mr: 4 }}
+              >
+                <LoginIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+        </>
+      )}
     </>
   );
 };
