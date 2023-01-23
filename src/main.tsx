@@ -1,10 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider as ReduxProvider } from "react-redux";
 import App from "./App";
-import "./index.css";
+import { store } from "./components/reducks/store";
+import { CookiesProvider } from "react-cookie";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <CookiesProvider>
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
+    </CookiesProvider>
   </React.StrictMode>
 );

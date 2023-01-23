@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import type { FC } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Home from "../components/enviroment/Home";
-import Item from "../components/enviroment/Item";
+import ItemDetail from "../components/enviroment/ItemDetail";
+import SignIn from "../components/enviroment/SignIn";
 
 const IndexRoutes: FC = () => {
   const { hash, pathname } = useLocation();
@@ -16,8 +17,9 @@ const IndexRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="signin" element={<SignIn />} />
       <Route path="items">
-        <Route path=":id" element={<Item />} />
+        <Route path=":id" element={<ItemDetail />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
