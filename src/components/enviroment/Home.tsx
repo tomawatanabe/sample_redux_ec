@@ -1,9 +1,8 @@
 import type { FC } from "react";
-import Header from "../ecosystem/Header";
-import ItemCardList from "../ecosystem/ItemCardList";
+import ItemList from "../ecosystem/ItemList";
 
 const Home: FC = () => {
-  return <ItemCardList />;
+  return <ItemList />;
 };
 
 export default Home;
