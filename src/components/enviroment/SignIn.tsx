@@ -9,7 +9,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { signIn } from "../redux/userSlice";
 import { supabase } from "../../lib/supabase-client";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -124,7 +123,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"新規会員登録はこちら"}
               </Link>
             </Grid>

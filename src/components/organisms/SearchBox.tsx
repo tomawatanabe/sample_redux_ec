@@ -53,9 +53,6 @@ const SearchBox = () => {
     setSearchWord(e.target.value);
 
   const addSearchWord = (props: string) => {
-    // const newSearchWord: SearchType = {
-    //   searchWord: searchWord,
-    // };
     dispatch(search(searchWord));
   };
 

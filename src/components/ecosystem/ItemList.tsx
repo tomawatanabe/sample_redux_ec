@@ -4,6 +4,7 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  CssBaseline,
   Grid,
   Pagination,
   Typography,
@@ -67,11 +68,17 @@ const ItemList = () => {
   return (
     <>
       <Box sx={{ padding: 5 }}>
+        <CssBaseline />
         <Grid container spacing={6} justifyContent="center" alignItems="center">
           <>
             {stocks.map((stock: any) => {
+              // const { data } = supabase.storage
+              //   .from(`profiles/sneaker_ec/images/shoes/${stock.items.name}`)
+              //   .getPublicUrl(`${stock.items.name}1.jpg`);
+              // const imageUrl = data.publicUrl;
+
               return (
-                <Grid item xs={12} sm={4} md={3} lg={2.4}>
+                <Grid item xs={12} sm={4} md={3} lg={2.4} key={stock.id}>
                   <Card sx={{ height: 350 }}>
                     <CardActionArea
                       component={RouterLink}
@@ -81,7 +88,7 @@ const ItemList = () => {
                         <CardMedia
                           component="img"
                           src={`${stock.image1}`}
-                          alt={`${stock.image1}`}
+                          // alt={`${imageUrl}`}
                           height="auto"
                           width="100%"
                         />
@@ -105,7 +112,7 @@ const ItemList = () => {
           </>
         </Grid>
       </Box>
-
+      {/* 
       <Box>
         <Grid
           container
@@ -125,9 +132,13 @@ const ItemList = () => {
             />
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </>
   );
 };
 
 export default ItemList;
+
+// https://zavwqhknlvhnxnjncevv.supabase.co/storage/v1/object/public/profiles/sneaker_ec/images/shoes/01_AIR%20FOAMPOSITE%20ONE/AIR%20FOAMPOSITE%20ONE1.jpg
+// https://zavwqhknlvhnxnjncevv.supabase.co/storage/v1/object/public/profiles/sneaker_ec/images/shoes/01_AIR%20FOAMPOSITE%20ONE1/AIR%20FOAMPOSITE%20ONE1.jpg
+// https://zavwqhknlvhnxnjncevv.supabase.co/storage/v1/object/public/profiles/sneaker_ec/images/shoes/AIR%20JORDAN%205%20TROPHY%20ROOM%20SP/AIR%20JORDAN%205%20TROPHY%20ROOM%20SP.jpg

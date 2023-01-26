@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import HistoryIcon from "@mui/icons-material/History";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import LoginIcon from "@mui/icons-material/Login";
@@ -15,6 +15,7 @@ import SearchBox from "../organisms/SearchBox";
 
 const Header: React.FC = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -43,24 +44,44 @@ const Header: React.FC = () => {
               <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
                 <QuestionMarkIcon />
               </IconButton>
-
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+              <IconButton
+                component={RouterLink}
+                to={"/cart"}
+                size="large"
+                color="inherit"
+                sx={{ mr: 4 }}
+              >
                 <ShoppingCart />
               </IconButton>
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+              <IconButton
+                component={RouterLink}
+                to={"/favorite"}
+                size="large"
+                color="inherit"
+                sx={{ mr: 4 }}
+              >
                 <FavoriteIcon />
               </IconButton>
               <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
                 <HistoryIcon />
               </IconButton>
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+              <IconButton
+                component={RouterLink}
+                to={"/userprofile"}
+                size="large"
+                color="inherit"
+                sx={{ mr: 4 }}
+              >
                 <AccountCircle />
               </IconButton>
               <IconButton
                 size="large"
                 color="inherit"
                 sx={{ mr: 4 }}
-                onClick={() => removeCookie("userID")}
+                onClick={() => {
+                  removeCookie("userID");
+                  navigate("/");
+                }}
               >
                 <LogoutIcon />
               </IconButton>
@@ -93,15 +114,16 @@ const Header: React.FC = () => {
                 <QuestionMarkIcon />
               </IconButton>
 
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+              <IconButton
+                component={RouterLink}
+                to={"/cart"}
+                size="large"
+                color="inherit"
+                sx={{ mr: 4 }}
+              >
                 <ShoppingCart />
               </IconButton>
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
-                <HistoryIcon />
-              </IconButton>
+
               <IconButton
                 component={RouterLink}
                 to={"/signin"}

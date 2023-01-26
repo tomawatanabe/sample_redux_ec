@@ -6,7 +6,6 @@ export const userSlice = createSlice({
     isSignedIn: false,
     // id: "",
     // username: "",
-    // cart: [],
     // favorites: [],
   },
   reducers: {
@@ -15,7 +14,6 @@ export const userSlice = createSlice({
         isSignedIn: true,
         // id: action.payload.uid,
         // username: action.payload.username,
-        // cart: [],
         // favorites: [],
       };
     },
@@ -24,7 +22,6 @@ export const userSlice = createSlice({
         isSignedIn: false,
         // uid: "",
         // username: "",
-        // cart: [],
         // favorites: [],
       };
     },
