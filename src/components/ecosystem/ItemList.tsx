@@ -4,6 +4,7 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  CssBaseline,
   Grid,
   Pagination,
   Typography,
@@ -67,11 +68,12 @@ const ItemList = () => {
   return (
     <>
       <Box sx={{ padding: 5 }}>
+        <CssBaseline />
         <Grid container spacing={6} justifyContent="center" alignItems="center">
           <>
             {stocks.map((stock: any) => {
               return (
-                <Grid item xs={12} sm={4} md={3} lg={2.4}>
+                <Grid item xs={12} sm={4} md={3} lg={2.4} key={stock.id}>
                   <Card sx={{ height: 350 }}>
                     <CardActionArea
                       component={RouterLink}
@@ -81,7 +83,7 @@ const ItemList = () => {
                         <CardMedia
                           component="img"
                           src={`${stock.image1}`}
-                          alt={`${stock.image1}`}
+                          // alt={`${imageUrl}`}
                           height="auto"
                           width="100%"
                         />
@@ -105,7 +107,7 @@ const ItemList = () => {
           </>
         </Grid>
       </Box>
-
+      {/* 
       <Box>
         <Grid
           container
@@ -125,7 +127,7 @@ const ItemList = () => {
             />
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </>
   );
 };

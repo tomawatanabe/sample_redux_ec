@@ -9,40 +9,94 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { signIn } from "../redux/userSlice";
 import { supabase } from "../../lib/supabase-client";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/types/rootState.type";
+import { clear } from "../redux/cartSlice";
+import { useForm } from "react-hook-form";
+import { List } from "@mui/material";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies();
   const [formData, setFormData] = React.useState({ email: "", password: "" });
   const [errorFlag, setErrorFlag] = React.useState(false);
+  const dispatch = useDispatch();
+  const selector: Array<number> | [] = useSelector(
+    (state: RootState) => state.cart.guestCart
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    setFormData({ ...formData, [name]: e.target.value });
+  const {
+    register,
+    getValues,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+    criteriaMode: "all",
+    shouldUnregister: false,
+  });
+
+  // ReduxカートをSupabaseカートに移動（差分のみ）
+  const handleCombine = async (
+    guestCart: Array<number> | [] = [],
+    userID: number
+  ) => {
+    if (guestCart.length !== 0) {
+      // supabaseカートの中身を取得
+      const { data: membersCartObj } = await supabase
+        .from("shopping_cart")
+        .select("stock_id")
+        .eq("user_id", userID);
+
+      // 配列に変換
+      const membersCartArr: Array<number> = [];
+      membersCartObj?.forEach((v) => membersCartArr.push(v.stock_id as number));
+
+      console.log("membersCart", membersCartArr);
+
+      // SupabaseカートとReduxカートの差分を作成
+      const newCart = guestCart.filter((v) => membersCartArr?.indexOf(v) == -1);
+
+      // 差分のみSupabaseに送る
+      for (let i = 0; i < newCart.length; i++) {
+        const { data, error } = await supabase.from("shopping_cart").insert([
+          {
+            user_id: userID,
+            stock_id: newCart[i],
+          },
+        ]);
+      }
+      // Reduxカートの中身を空にする
+      dispatch(clear());
+    }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onSubmit = async () => {
+    const values = getValues();
     try {
       const { data } = await supabase
         .from("users")
         .select()
-        .eq("email", `${formData.email}`)
-        .eq("password", `${formData.password}`);
+        .eq("email", `${values.email}`)
+        .eq("password", `${values.password}`);
 
       //入力されたユーザ情報が存在しない場合
       if (!data || data?.length === 0) {
         setErrorFlag(true);
+
+        //入力されたユーザ情報が存在する場合
       } else {
-        // cookieを持たせる処理
+        // cookieを持たせる
         setCookie("userID", data[0].id);
-        console.log("data", data);
-        // storeにユーザ情報を持たせる処理(検討中)
+
+        // ReduxカートをSupabaseカートに移動
+        handleCombine(selector, data[0].id);
+
         // トップページに移動
         navigate("/");
       }
@@ -69,11 +123,12 @@ export default function SignIn() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="sm">
       <CssBaseline />
-      <Box
+      <List
         sx={{
           marginTop: 8,
+          mb: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -85,29 +140,54 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           会員情報を入力してください
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="メールアドレス"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={handleChange}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="パスワード"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
+      </List>
+      <Box>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <Box>
+            <TextField
+              margin="normal"
+              fullWidth
+              label="メールアドレス*必須"
+              id="mail"
+              placeholder="sample@example.co.jp"
+              {...register("email", {
+                required: "必須項目です。",
+                pattern: {
+                  value:
+                    /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                  message: "メールアドレスを正しく入力してください",
+                },
+              })}
+            />
+            {errors.email?.message && (
+              <Typography width="inherit" sx={{ color: "red" }}>
+                {errors.email.message as string}
+              </Typography>
+            )}
+          </Box>
+          <Box>
+            <TextField
+              margin="normal"
+              fullWidth
+              label="パスワード*必須"
+              type="password"
+              id="password"
+              {...register("password", {
+                required: "必須項目です。",
+              })}
+            />
+            {errors.password?.message && (
+              <Typography width="inherit" sx={{ color: "red" }}>
+                {errors.password.message as string}
+              </Typography>
+            )}
+          </Box>
+
           <Button
             type="submit"
             fullWidth
@@ -118,13 +198,9 @@ export default function SignIn() {
           </Button>
           <LogInError />
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                パスワードを忘れた場合
-              </Link>
-            </Grid>
+            <Grid item xs></Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"新規会員登録はこちら"}
               </Link>
             </Grid>

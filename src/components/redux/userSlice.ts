@@ -4,28 +4,19 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     isSignedIn: false,
-    // id: "",
-    // username: "",
-    // cart: [],
-    // favorites: [],
+    id: "",
   },
   reducers: {
     signIn: (state, action) => {
       state = {
         isSignedIn: true,
-        // id: action.payload.uid,
-        // username: action.payload.username,
-        // cart: [],
-        // favorites: [],
+        id: action.payload.uid,
       };
     },
     signOut: (state) => {
       state = {
         isSignedIn: false,
-        // uid: "",
-        // username: "",
-        // cart: [],
-        // favorites: [],
+        id: "",
       };
     },
   },

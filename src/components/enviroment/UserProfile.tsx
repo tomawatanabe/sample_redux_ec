@@ -9,11 +9,16 @@ import {
   Grid,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { supabase } from "../../lib/supabase-client";
 import { AccountCircle } from "@mui/icons-material";
 import { Box } from "@mui/system";
 
 const UserProfile = () => {
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const [loading, setLoading] = useState(true);
+
   const {
     register,
     getValues,
@@ -26,6 +31,37 @@ const UserProfile = () => {
     criteriaMode: "all",
     shouldUnregister: false,
   });
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", cookie.userID)
+        .limit(1)
+        .single();
+
+      if (data) {
+        //デフォルト値としてセット
+        setValue("lastName", data?.last_name as string);
+        setValue("firstName", data?.first_name as string);
+        setValue("kanaLastName", data?.kana_last_name as string);
+        setValue("kanaFirstName", data?.kana_first_name as string);
+        setValue("phone", data?.phone as number);
+        setValue("email", data?.email as string);
+        setValue("zipCode", data?.zip_code as number);
+        setValue("prefecture", data?.prefecture as string);
+        setValue("city", data?.city as string);
+        setValue("address", data?.address as string);
+        setValue("building", data?.building as string);
+        setValue("password", data?.password as string);
+
+        //setterを呼び出して再レンダリングをかける
+        setLoading(false);
+      }
+    };
+    getUserProfile();
+  }, [loading]);
 
   //郵便番号APIから住所を取得する関数
   const citySuggest = async () => {
@@ -68,7 +104,7 @@ const UserProfile = () => {
 
     const { data: patchData, error: patchError } = await supabase
       .from("users")
-      .insert({
+      .update({
         last_name: values.lastName,
         first_name: values.firstName,
         kana_last_name: values.kanaLastName,
@@ -81,7 +117,8 @@ const UserProfile = () => {
         address: values.address,
         building: values.building,
         password: values.password,
-      });
+      })
+      .eq("id", cookie.userID);
 
     if (patchError) {
       console.log("patchError", patchError);
@@ -89,6 +126,14 @@ const UserProfile = () => {
 
     alert("会員情報が更新されました");
   };
+
+  if (loading)
+    return (
+      <Box>
+        <CssBaseline />
+        loading...
+      </Box>
+    );
 
   return (
     <>
@@ -107,7 +152,7 @@ const UserProfile = () => {
             <AccountCircle />
           </Avatar>
           <Typography component="h1" variant="h5">
-            会員登録
+            会員情報
           </Typography>
         </List>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
@@ -354,7 +399,7 @@ const UserProfile = () => {
 
           <Box sx={{ mt: 2 }} textAlign="center">
             <Button type="submit" variant="contained">
-              上記の内容で会員登録する
+              変更を保存する
             </Button>
           </Box>
         </Box>
