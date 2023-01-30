@@ -4,7 +4,6 @@ import MembersCart from "../ecosystem/MembersCart";
 
 const Cart = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
-  console.log(cookies.userID);
   return <>{cookies.userID ? <MembersCart /> : <GuestCart />}</>;
 };
 

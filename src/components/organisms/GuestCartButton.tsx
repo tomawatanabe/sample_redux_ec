@@ -8,7 +8,7 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/types/rootState.type";
 import { useDispatch } from "react-redux";
-import { add, remove, clear } from "../redux/cartSlice";
+import { add, remove } from "../redux/cartSlice";
 
 const GuestCartButton = (): JSX.Element => {
   const params = useParams();

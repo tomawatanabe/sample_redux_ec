@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../lib/supabase-client";
-import GuestCart from "../ecosystem/GuestCart";
 import FavoriteButton from "../organisms/FavoriteButton";
 import GuestCartButton from "../organisms/GuestCartButton";
 import MemberCartButton from "../organisms/MemberCartButton";
@@ -21,7 +20,7 @@ const ItemDetail = () => {
   const [detail, setDetail] = useState<any[]>([]);
 
   const getStocksDetail = async () => {
-    const { data: res, error } = await supabase
+    const { data, error } = await supabase
       .from("stocks")
       .select(
         `id,price,amount,condition,size,image1,items(name,year,color,description)`
@@ -31,12 +30,9 @@ const ItemDetail = () => {
     if (error) {
       console.log(error);
     }
-
-    if (!res) return;
-
-    console.log(res);
-    const data = await res;
-    setDetail(data);
+    if (data) {
+      setDetail(data);
+    }
   };
 
   useEffect(() => {

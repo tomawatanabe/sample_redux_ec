@@ -7,8 +7,8 @@ import SignIn from "../components/enviroment/SignIn";
 import Favorite from "../components/enviroment/Favorite";
 import SignUp from "../components/enviroment/SignUp";
 import UserProfile from "../components/enviroment/UserProfile";
-import UserProfileEdit from "../components/enviroment/UserProfileEdit";
 import Cart from "../components/enviroment/Cart";
+import Settlement from "../components/enviroment/Settlement";
 
 const IndexRoutes: FC = () => {
   const { hash, pathname } = useLocation();
@@ -25,13 +25,12 @@ const IndexRoutes: FC = () => {
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="userprofile" element={<UserProfile />} />
-      <Route path="userprofile/edit" element={<UserProfileEdit />} />
-
       <Route path="items">
         <Route path=":id" element={<ItemDetail />} />
       </Route>
       <Route path="favorite" element={<Favorite />} />
       <Route path="cart" element={<Cart />} />
+      <Route path="cart/settlement" element={<Settlement />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

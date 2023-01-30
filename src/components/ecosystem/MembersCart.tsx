@@ -6,13 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import {
-  Button,
-  Container,
-  CssBaseline,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Button, Container, CssBaseline, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { Link as RouterLink } from "react-router-dom";
@@ -26,12 +20,14 @@ const MembersCart = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    //supabaseのカートからデータを取得
     const getCart = async () => {
       const { data } = await supabase
         .from("shopping_cart")
         .select("id,user_id,stocks(id,item_id,image1,size,price,items(name))")
         .eq("user_id", cookies.userID);
 
+      // 合計金額を計算
       const initial = data
         ?.map((v: any) => v.stocks?.price)
         .reduce((prev, curr) => {
@@ -43,6 +39,7 @@ const MembersCart = (): JSX.Element => {
         setTotal(initial);
       }
     };
+
     void getCart();
   }, [loading]);
 
@@ -50,13 +47,12 @@ const MembersCart = (): JSX.Element => {
     <Container component="main">
       <CssBaseline />
       <Box>
-        <CssBaseline />{" "}
+        <CssBaseline />
         <List>
           <Typography component="h1" variant="h5">
             カート
           </Typography>
           {cart.map((v) => {
-            console.log(v);
             return (
               <ListItem key={v.id}>
                 <ListItemAvatar>
@@ -105,6 +101,8 @@ const MembersCart = (): JSX.Element => {
           カート内小計:¥{total?.toLocaleString()}（税込）
         </Typography>
         <Button
+          component={RouterLink}
+          to={`/cart/settlement`}
           variant="outlined"
           aria-label="link to buy"
           startIcon={<ShopIcon />}
