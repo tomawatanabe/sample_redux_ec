@@ -1,8 +1,5 @@
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
-import { supabase } from "../../lib/supabase-client";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { useSelector } from "react-redux";

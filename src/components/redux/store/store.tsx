@@ -23,11 +23,3 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: [thunk],
 });
-
-// export const store = configureStore({
-//   reducer: {
-//     users: userSlice,
-//     search: searchSlice,
-//     cart: cartSlice,
-//   },
-// });

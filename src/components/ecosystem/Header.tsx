@@ -38,12 +38,12 @@ const Header: React.FC = () => {
                   textDecoration: "none",
                 }}
               >
-                Redux_MUI_EC
+                Sneaker Freak
               </Typography>
               <SearchBox />
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+              {/* <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
                 <QuestionMarkIcon />
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 component={RouterLink}
                 to={"/cart"}
@@ -62,9 +62,9 @@ const Header: React.FC = () => {
               >
                 <FavoriteIcon />
               </IconButton>
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+              {/* <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
                 <HistoryIcon />
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 component={RouterLink}
                 to={"/userprofile"}
@@ -107,12 +107,12 @@ const Header: React.FC = () => {
                   textDecoration: "none",
                 }}
               >
-                Redux_MUI_EC
+                Sneaker Freak
               </Typography>
               <SearchBox />
-              <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
+              {/* <IconButton size="large" color="inherit" sx={{ mr: 4 }}>
                 <QuestionMarkIcon />
-              </IconButton>
+              </IconButton> */}
 
               <IconButton
                 component={RouterLink}

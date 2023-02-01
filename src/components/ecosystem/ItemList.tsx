@@ -6,7 +6,6 @@ import {
   CardMedia,
   CssBaseline,
   Grid,
-  Pagination,
   Typography,
 } from "@mui/material";
 import { supabase } from "../../lib/supabase-client";
@@ -14,20 +13,6 @@ import { Box } from "@mui/system";
 import { Link as RouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/types/rootState.type";
-
-// type itemList = {
-//   id: number | null;
-//   price: number | null;
-//   size: number | null;
-//   items:
-//     | {
-//         name: string | null;
-//       }
-//     | Array<{
-//         name: string | null;
-//       }>
-//     | null;
-// };
 
 const ItemList = () => {
   const [stocks, setStocks] = useState<any[]>([]); // 現在のページ
@@ -59,7 +44,6 @@ const ItemList = () => {
         );
         setStocks(result);
         setTotal(result?.length);
-        console.log("result,searchWord", result, searchWord);
       }
     };
     void getAllStocks();
