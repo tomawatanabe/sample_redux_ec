@@ -12,8 +12,8 @@ export default function middleware(request) {
     const [user, password] = atob(basicAuth).toString().split(":");
 
     if (
-      user === import.meta.env.VITE_BASIC_AUTH_USER &&
-      password === import.meta.env.VITE_BASIC_AUTH_PASSWORD
+      user === process.env.BASIC_AUTH_USER &&
+      password === process.env.BASIC_AUTH_PASSWORD
     ) {
       return next();
     }
