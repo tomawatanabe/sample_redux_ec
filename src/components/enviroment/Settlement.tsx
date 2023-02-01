@@ -13,17 +13,17 @@ import {
   Typography,
 } from "@mui/material";
 import ProductionQuantityLimitsOutlinedIcon from "@mui/icons-material/ProductionQuantityLimitsOutlined";
-import CheckIcon from "@mui/icons-material/Check";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { supabase } from "../../lib/supabase-client";
 import { Link as RouterLink } from "react-router-dom";
+import PurchaseCompleteButton from "../organisms/PurchaseCompleteButton";
 
 const Settlement = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [profile, setProfile] = useState<any>({});
   const [cart, setCart] = useState<any[]>([]);
-  const [total, setTotal] = useState<Number>();
+  const [total, setTotal] = useState<number>(0);
 
   const getUserProfile = async () => {
     const { data, error } = await supabase
@@ -141,10 +141,11 @@ const Settlement = () => {
                 合計:¥{(Number(total) + 550)?.toLocaleString()}（税込）
               </Typography>
               <Box textAlign="center" sx={{ mt: 1 }}>
-                <Button variant="contained">
-                  <CheckIcon />
-                  注文を確定
-                </Button>
+                <PurchaseCompleteButton
+                  userID={cookies.userID}
+                  total={total}
+                  stockIDArr={cart.map((elm) => elm.stocks.id)}
+                />
               </Box>
             </CardContent>
           </Card>

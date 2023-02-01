@@ -10,6 +10,7 @@ import {
   Button,
   Container,
   CssBaseline,
+  Grid,
   IconButton,
   Typography,
 } from "@mui/material";
@@ -17,6 +18,7 @@ import { Box } from "@mui/system";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { Link as RouterLink } from "react-router-dom";
+import SentimentNeutralIcon from "@mui/icons-material/SentimentNeutral";
 
 const Favorite = () => {
   const [favorites, setFavorites] = useState<any[]>([]);
@@ -39,6 +41,30 @@ const Favorite = () => {
     void getFavorites();
     console.log("useEffefct");
   }, [loading]);
+
+  if (favorites.length === 0) {
+    return (
+      <>
+        <CssBaseline />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "80vh" }}
+        >
+          <Grid item xs={3}>
+            <Box textAlign="center">
+              <SentimentNeutralIcon fontSize="large" />
+              <Typography>お気に入り商品がありません...</Typography>
+              <Typography>商品を追加してみましょう！</Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
 
   return (
     <Container component="main">

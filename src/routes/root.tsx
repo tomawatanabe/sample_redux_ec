@@ -9,6 +9,7 @@ import SignUp from "../components/enviroment/SignUp";
 import UserProfile from "../components/enviroment/UserProfile";
 import Cart from "../components/enviroment/Cart";
 import Settlement from "../components/enviroment/Settlement";
+import SettlementClose from "../components/enviroment/SettlementClose";
 
 const IndexRoutes: FC = () => {
   const { hash, pathname } = useLocation();
@@ -31,6 +32,7 @@ const IndexRoutes: FC = () => {
       <Route path="favorite" element={<Favorite />} />
       <Route path="cart" element={<Cart />} />
       <Route path="cart/settlement" element={<Settlement />} />
+      <Route path="cart/settlement/close" element={<SettlementClose />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
