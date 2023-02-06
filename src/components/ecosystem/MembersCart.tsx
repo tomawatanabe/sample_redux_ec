@@ -6,19 +6,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import {
-  Button,
-  Container,
-  CssBaseline,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Button, Container, CssBaseline, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { Link as RouterLink } from "react-router-dom";
 import { RemoveShoppingCart } from "@mui/icons-material";
 import ShopIcon from "@mui/icons-material/Shop";
-import SentimentNeutralIcon from "@mui/icons-material/SentimentNeutral";
+import EmptyCart from "../organisms/EmptyCart";
 
 const MembersCart = (): JSX.Element => {
   const [cart, setCart] = useState<any[]>([]);
@@ -51,27 +45,7 @@ const MembersCart = (): JSX.Element => {
   }, [loading]);
 
   if (!total) {
-    return (
-      <>
-        <CssBaseline />
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: "80vh" }}
-        >
-          <Grid item xs={3}>
-            <Box textAlign="center">
-              <SentimentNeutralIcon fontSize="large" />
-              <Typography>カートに商品がありません...</Typography>
-              <Typography>商品を追加してみましょう！</Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </>
-    );
+    return <EmptyCart />;
   }
 
   return (
