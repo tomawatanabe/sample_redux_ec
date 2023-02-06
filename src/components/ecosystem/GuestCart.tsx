@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/types/rootState.type";
 import { remove } from "../redux/cartSlice";
 import { useDispatch } from "react-redux";
+import EmptyCart from "../organisms/EmptyCart";
 
 const GuestCart = (): JSX.Element => {
   const navigate = useNavigate();
@@ -55,6 +56,10 @@ const GuestCart = (): JSX.Element => {
     dispatch(remove(props));
     setLoading(!loading);
   };
+
+  if (!total) {
+    return <EmptyCart />;
+  }
 
   return (
     <Container component="main">
